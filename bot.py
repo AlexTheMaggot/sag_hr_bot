@@ -22,6 +22,7 @@ class Menu(StatesGroup):
     lang = State()
     name = State()
     contact = State()
+    region = State()
 
 
 @dp.message(CommandStart())
@@ -62,6 +63,19 @@ async def name_handler(message: Message, state: FSMContext):
         contact_kb = kb.contact_kb_uz
     await message.answer(text=text, reply_markup=contact_kb)
 
+
+@dp.message(Menu.contact)
+async def contact_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    user_update(message.chat.id, phone_number=message.contact.phone_number)
+    await state.set_state(Menu.region)
+    if user['lang'] == 'ru':
+        text = 'Пожалуйста, укажите регион проживания'
+        regions_kb = kb.regions_kb_ru
+    else:
+        text = "Iltimos, yashash hududingizni ko'rsating"
+        regions_kb = kb.regions_kb_uz
+    await message.answer(text=text, reply_markup=regions_kb)
 
 @dp.message()
 async def echo_handler(message: Message):
