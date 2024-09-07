@@ -11,6 +11,7 @@ from aiogram.fsm.context import FSMContext
 
 import kb
 from config import *
+from db import *
 
 
 TOKEN = TELEGRAM_TOKEN
@@ -24,23 +25,27 @@ class Menu(StatesGroup):
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext):
+    if not user_get_detail(message.chat.id):
+        user_create(message.chat.id)
     await state.set_state(Menu.lang)
-    await message.answer('Приветствие и выбор языка', reply_markup=kb.start_kb)
+    text = "Вас приветствует HR-бот компании SAG. Пожалуйста, укажите язык:\n\n"
+    text += "SAG HR botiga xush kelibsiz. Iltimos, tilingizni ko'rsating:"
+    await message.answer(text, reply_markup=kb.start_kb)
 
 
 @dp.message(Menu.lang)
 async def language_handler(message: Message, state: FSMContext):
     match message.text:
         case 'Русский':
-            await state.update_data(lang='ru')
+            user_update(message.chat.id, lang='ru')
             await state.set_state(Menu.name)
             await message.answer(text='Пожалуйста, укажите имя')
         case 'Узбекский':
-            await state.update_data(lang='uz')
+            user_update(message.chat.id, lang='uz')
             await state.set_state(Menu.name)
-            await message.answer(text='Пожалуйста, укажите имя(на узбекском)')
+            await message.answer(text="Iltimos, ismingizni kiriting")
         case _:
-            await message.answer(text='Пожалуйста укажите язык (рус и узб)', reply_markup=kb.start_kb)
+            await message.answer(text='Пожалуйста укажите язык\n\nTilni belgilang', reply_markup=kb.start_kb)
 
 
 @dp.message()
