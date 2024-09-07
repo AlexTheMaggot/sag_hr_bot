@@ -19,10 +19,14 @@ def user_get_detail(user_id):
     return user
 
 
-def user_update(user_id, lang=None, name=None):
+def user_update(user_id, lang=None, name=None, phone_number=None):
     if lang:
         cursor.execute(f'''UPDATE users SET lang = '{lang}' ''')
         conn.commit()
     if name:
         cursor.execute(f'''UPDATE users SET name = '{name}' ''')
         conn.commit()
+    if phone_number:
+        cursor.execute(f'''UPDATE users SET phone_number = '{phone_number}' ''')
+        conn.commit()
+
