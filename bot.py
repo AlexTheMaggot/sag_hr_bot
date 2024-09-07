@@ -21,6 +21,7 @@ dp = Dispatcher()
 class Menu(StatesGroup):
     lang = State()
     name = State()
+    contact = State()
 
 
 @dp.message(CommandStart())
@@ -46,6 +47,20 @@ async def language_handler(message: Message, state: FSMContext):
             await message.answer(text="Iltimos, ismingizni kiriting")
         case _:
             await message.answer(text='Пожалуйста укажите язык\n\nTilni belgilang', reply_markup=kb.start_kb)
+
+
+@dp.message(Menu.name)
+async def name_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    user_update(message.chat.id, name=message.text)
+    await state.set_state(Menu.contact)
+    if user['lang'] == 'ru':
+        text = 'Предоставьте, пожалуйста, свои контактные данные'
+        contact_kb = kb.contact_kb_ru
+    else:
+        text = "Iltimos, aloqa ma'lumotlaringizni kiriting"
+        contact_kb = kb.contact_kb_uz
+    await message.answer(text=text, reply_markup=contact_kb)
 
 
 @dp.message()
