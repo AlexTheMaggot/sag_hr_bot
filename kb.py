@@ -32,6 +32,12 @@ b = {
     'reg_tas_uz': KeyboardButton(text="Toshkent viloyati"),
     'reg_fer_uz': KeyboardButton(text="Farg’ona viloyati"),
     'reg_hor_uz': KeyboardButton(text="Xorazm viloyati"),
+    'about_ru': KeyboardButton(text='О компании'),
+    'about_uz': KeyboardButton(text="Kompaniya haqida"),
+    'vacancies_list_ru': KeyboardButton(text='Список вакансий'),
+    'vacancies_list_uz': KeyboardButton(text="Bo'sh ish o'rinlari ro'yxati"),
+    'order_ru': KeyboardButton(text='Подать заявку'),
+    'order_uz': KeyboardButton(text="Hozir murojaat qiling"),
 }
 
 start_kb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=[[b['ru'], b['uz']]])
@@ -61,5 +67,23 @@ regions_kb_uz = ReplyKeyboardMarkup(
         [b['reg_sur_uz'], b['reg_sir_uz']],
         [b['reg_tas_uz'], b['reg_fer_uz']],
         [b['reg_hor_uz']]
+    ]
+)
+main_menu_kb_ru = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['about_ru']],
+        [b['vacancies_list_ru']],
+        [b['order_ru']],
+    ]
+)
+main_menu_kb_uz = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['about_uz']],
+        [b['vacancies_list_uz']],
+        [b['order_uz']],
     ]
 )
