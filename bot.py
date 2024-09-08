@@ -23,6 +23,9 @@ class Menu(StatesGroup):
     name = State()
     contact = State()
     region = State()
+    about = State()
+    main_menu = State()
+
 
 
 @dp.message(CommandStart())
@@ -76,6 +79,72 @@ async def contact_handler(message: Message, state: FSMContext):
         text = "Iltimos, yashash hududingizni ko'rsating"
         regions_kb = kb.regions_kb_uz
     await message.answer(text=text, reply_markup=regions_kb)
+
+
+@dp.message(Menu.region)
+async def region_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    inputs = [
+        'Андижанская область',
+        'Бухарская область',
+        'Джизакская область',
+        'Кашкадарьинская область',
+        'Навоийская область',
+        'Наманганская область',
+        'Республика Каракалпакстан',
+        'Самаркандская область',
+        'Сурхандарьинская область',
+        'Сырдарьинская область',
+        'Ташкентская область',
+        'Ферганская область',
+        'Хорезмская область',
+        "Andijon viloyati",
+        "Buxoro viloyati",
+        "Jizzax viloyati",
+        "Qashqadaryo viloyati",
+        "Navoiy viloyati",
+        "Namangan viloyati",
+        "Qoraqalpog’iston Respublikasi",
+        "Samarqand viloyati",
+        "Surxondaryo viloyati",
+        "Sirdaryo viloyati",
+        "Toshkent viloyati",
+        "Farg’ona viloyati",
+        "Xorazm viloyati",
+    ]
+    if message.text in inputs:
+        user_update(message.chat.id, region=message.text)
+        await state.set_state(Menu.about)
+        if user['lang'] == 'ru':
+            text = 'Для завершения регистрации, расскажите пару слов о себе. '
+            text += 'Можете указать род деятельности и/или ключевые навыки.'
+        else:
+            text = "Ro'yxatdan o'tishni yakunlash uchun bizga o'zingiz haqingizda bir necha so'z ayting. "
+            text += "Siz o'zingizning faoliyat turini va/yoki asosiy ko'nikmalaringizni ko'rsatishingiz mumkin."
+        await message.answer(text=text)
+    else:
+        if user['lang'] == 'ru':
+            text = 'Пожалуйста выберите регион из списка ниже.'
+            regions_kb = kb.regions_kb_ru
+        else:
+            text = "Quyidagi roʻyxatdan hududingizni tanlang."
+            regions_kb = kb.regions_kb_uz
+        await message.answer(text=text, reply_markup=regions_kb)
+
+
+@dp.message(Menu.about)
+async def about_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    user_update(message.chat.id, about=message.text)
+    await state.set_state(Menu.main_menu)
+    if user['lang'] == 'ru':
+        text = 'Регистрация завершена!'
+        main_menu_kb = kb.main_menu_kb_ru
+    else:
+        text = "Roʻyxatdan oʻtish tugallandi!"
+        main_menu_kb = kb.main_menu_kb_uz
+    await message.answer(text=text, reply_markup=main_menu_kb)
+
 
 @dp.message()
 async def echo_handler(message: Message):
