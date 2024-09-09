@@ -25,6 +25,10 @@ class Menu(StatesGroup):
     region = State()
     about = State()
     main_menu = State()
+    about_us = State()
+    vacancies_list = State()
+    order = State()
+    change_lang = State()
 
 
 
@@ -70,15 +74,24 @@ async def name_handler(message: Message, state: FSMContext):
 @dp.message(Menu.contact)
 async def contact_handler(message: Message, state: FSMContext):
     user = user_get_detail(message.chat.id)
-    user_update(message.chat.id, phone_number=message.contact.phone_number)
-    await state.set_state(Menu.region)
-    if user['lang'] == 'ru':
-        text = 'Пожалуйста, укажите регион проживания'
-        regions_kb = kb.regions_kb_ru
+    if message.contact:
+        user_update(message.chat.id, phone_number=message.contact.phone_number)
+        await state.set_state(Menu.region)
+        if user['lang'] == 'ru':
+            text = 'Пожалуйста, укажите регион проживания'
+            regions_kb = kb.regions_kb_ru
+        else:
+            text = "Iltimos, yashash hududingizni ko'rsating"
+            regions_kb = kb.regions_kb_uz
+        await message.answer(text=text, reply_markup=regions_kb)
     else:
-        text = "Iltimos, yashash hududingizni ko'rsating"
-        regions_kb = kb.regions_kb_uz
-    await message.answer(text=text, reply_markup=regions_kb)
+        if user['lang'] == 'ru':
+            text = 'Пожалуйста нажмите на кнопку для того, чтобы поделиться контактом'
+            keyboard = kb.contact_kb_ru
+        else:
+            text = "Yuborish Iltimos, kontaktni almashish uchun tugmani bosing"
+            keyboard = kb.contact_kb_uz
+        await message.answer(text=text, reply_markup=keyboard)
 
 
 @dp.message(Menu.region)
@@ -144,6 +157,55 @@ async def about_handler(message: Message, state: FSMContext):
         text = "Roʻyxatdan oʻtish tugallandi!"
         main_menu_kb = kb.main_menu_kb_uz
     await message.answer(text=text, reply_markup=main_menu_kb)
+
+
+@dp.message(Menu.main_menu)
+async def main_menu_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    if user['lang'] == 'ru':
+        match message.text:
+            case 'О компании':
+                await state.set_state(Menu.about_us)
+                text = 'Текст описания о компании'
+                keyboard = kb.back_kb_ru
+            case 'Список вакансий':
+                await state.set_state(Menu.vacancies_list)
+                text = 'Выберите вакансию из списка ниже'
+                keyboard = kb.back_kb_ru
+            case 'Подать заявку':
+                await state.set_state(Menu.order)
+                text = 'Напишите комментарий к заявке'
+                keyboard = kb.back_kb_ru
+            case 'Сменить язык':
+                await state.set_state(Menu.change_lang)
+                text = 'Пожалуйста, укажите язык'
+                keyboard = kb.change_lang_kb_ru
+            case _:
+                text = 'Пожалуйста, выберите пункт из меню ниже'
+                keyboard = kb.main_menu_kb_ru
+    else:
+        match message.text:
+            case "Kompaniya haqida":
+                await state.set_state(Menu.about_us)
+                text = "Kompaniya haqida tavsif matni"
+                keyboard = kb.back_kb_uz
+            case "Bo'sh ish o'rinlari ro'yxati":
+                await state.set_state(Menu.vacancies_list)
+                text = "Quyidagi ro'yxatdan vakansiyani tanlang"
+                keyboard = kb.back_kb_uz
+            case "Hozir murojaat qiling":
+                await state.set_state(Menu.order)
+                text = "Ilovaga sharh yozing"
+                keyboard = kb.back_kb_uz
+            case "Tilni o'zgartirish":
+                await state.set_state(Menu.change_lang)
+                text = "Tilni ko'rsating"
+                keyboard = kb.change_lang_kb_uz
+            case _:
+                text = "Quyidagi menyudan biror narsani tanlang"
+                keyboard = kb.main_menu_kb_ru
+    await message.answer(text=text, reply_markup=keyboard)
+
 
 
 @dp.message()
