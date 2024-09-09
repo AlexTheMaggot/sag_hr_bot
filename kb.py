@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 b = {
     'ru': KeyboardButton(text='Русский'),
-    'uz': KeyboardButton(text='Узбекский'),
+    'uz': KeyboardButton(text="O'zbek"),
     'contact_ru': KeyboardButton(text='Поделиться контактом', request_contact=True),
     'contact_uz': KeyboardButton(text="Kontaktni baham ko'ring", request_contact=True),
     'reg_and_ru': KeyboardButton(text='Андижанская область'),
@@ -38,6 +38,10 @@ b = {
     'vacancies_list_uz': KeyboardButton(text="Bo'sh ish o'rinlari ro'yxati"),
     'order_ru': KeyboardButton(text='Подать заявку'),
     'order_uz': KeyboardButton(text="Hozir murojaat qiling"),
+    'change_lang_ru': KeyboardButton(text='Сменить язык'),
+    'change_lang_uz': KeyboardButton(text="Tilni o'zgartirish"),
+    'back_ru': KeyboardButton(text='Назад'),
+    'back_uz': KeyboardButton(text="Orqaga"),
 }
 
 start_kb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=[[b['ru'], b['uz']]])
@@ -76,6 +80,7 @@ main_menu_kb_ru = ReplyKeyboardMarkup(
         [b['about_ru']],
         [b['vacancies_list_ru']],
         [b['order_ru']],
+        [b['change_lang_ru']],
     ]
 )
 main_menu_kb_uz = ReplyKeyboardMarkup(
@@ -85,5 +90,36 @@ main_menu_kb_uz = ReplyKeyboardMarkup(
         [b['about_uz']],
         [b['vacancies_list_uz']],
         [b['order_uz']],
+        [b['change_lang_uz']],
+    ]
+)
+back_kb_ru = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['back_ru']],
+    ]
+)
+back_kb_uz = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['back_uz']],
+    ]
+)
+change_lang_kb_ru = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['ru'], b['uz'],],
+        [b['back_ru']],
+    ]
+)
+change_lang_kb_uz = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['ru'], b['uz'],],
+        [b['back_uz']],
     ]
 )
