@@ -49,7 +49,7 @@ async def language_handler(message: Message, state: FSMContext):
             user_update(message.chat.id, lang='ru')
             await state.set_state(Menu.name)
             await message.answer(text='Пожалуйста, укажите имя')
-        case 'Узбекский':
+        case "O'zbek":
             user_update(message.chat.id, lang='uz')
             await state.set_state(Menu.name)
             await message.answer(text="Iltimos, ismingizni kiriting")
