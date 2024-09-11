@@ -37,8 +37,12 @@ async def command_start_handler(message: Message, state: FSMContext):
     if not user_get_detail(message.chat.id):
         user_create(message.chat.id)
     await state.set_state(Menu.lang)
-    text = "Вас приветствует HR-бот компании SAG. Пожалуйста, укажите язык:\n\n"
-    text += "SAG HR botiga xush kelibsiz. Iltimos, tilingizni ko'rsating:"
+    text = "Вас приветствует HR-бот SAG Group. История SAG Group берет свое начало с создания фабрики по производству "
+    text += "ковров в 2000 году. На данный момент в состав SAG Group входит более 10 компаний из различных сфер "
+    text += "экономики, многие из которых являются лидерами в своих отраслях.\n\nПожалуйста, укажите язык.\n\n"
+    text += "SAG Group HR botiga xush kelibsiz. SAG Group tarixi 2000 yilda gilam fabrikasining tashkil etilishidan "
+    text += "boshlanadi. Ayni paytda SAG Group tarkibiga iqtisodiyotning turli tarmoqlaridan 10 dan ortiq kompaniyalar "
+    text += "kiradi, ularning aksariyati o‘z sohalarida yetakchi hisoblanadi.\n\nIltimos, tilni tanlang."
     await message.answer(text, reply_markup=kb.start_kb)
 
 
@@ -48,11 +52,11 @@ async def language_handler(message: Message, state: FSMContext):
         case 'Русский':
             user_update(message.chat.id, lang='ru')
             await state.set_state(Menu.name)
-            await message.answer(text='Пожалуйста, укажите имя')
+            await message.answer(text='Напишите, пожалуйста, ваше ФИО')
         case "O'zbek":
             user_update(message.chat.id, lang='uz')
             await state.set_state(Menu.name)
-            await message.answer(text="Iltimos, ismingizni kiriting")
+            await message.answer(text="Iltimos, FISh yozing.")
         case _:
             await message.answer(text='Пожалуйста укажите язык\n\nTilni belgilang', reply_markup=kb.start_kb)
 
@@ -63,10 +67,10 @@ async def name_handler(message: Message, state: FSMContext):
     user_update(message.chat.id, name=message.text)
     await state.set_state(Menu.contact)
     if user['lang'] == 'ru':
-        text = 'Предоставьте, пожалуйста, свои контактные данные'
+        text = 'Предоставьте, пожалуйста, свои контактные данные.'
         contact_kb = kb.contact_kb_ru
     else:
-        text = "Iltimos, aloqa ma'lumotlaringizni kiriting"
+        text = "Telefon raqamingizni qoldiring."
         contact_kb = kb.contact_kb_uz
     await message.answer(text=text, reply_markup=contact_kb)
 
@@ -78,10 +82,10 @@ async def contact_handler(message: Message, state: FSMContext):
         user_update(message.chat.id, phone_number=message.contact.phone_number)
         await state.set_state(Menu.region)
         if user['lang'] == 'ru':
-            text = 'Пожалуйста, укажите регион проживания'
+            text = 'Пожалуйста, укажите ваш регион проживания.'
             regions_kb = kb.regions_kb_ru
         else:
-            text = "Iltimos, yashash hududingizni ko'rsating"
+            text = "Iltimos, yashash manzilingizni yozing."
             regions_kb = kb.regions_kb_uz
         await message.answer(text=text, reply_markup=regions_kb)
     else:
