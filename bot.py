@@ -23,6 +23,7 @@ class Menu(StatesGroup):
     name = State()
     contact = State()
     region = State()
+    custom_region = State()
     about = State()
     main_menu = State()
     about_us = State()
@@ -128,17 +129,27 @@ async def region_handler(message: Message, state: FSMContext):
         "Toshkent viloyati",
         "Farg’ona viloyati",
         "Xorazm viloyati",
+        'Другой регион',
+        "Boshqa mintaqa",
     ]
     if message.text in inputs:
-        user_update(message.chat.id, region=message.text)
-        await state.set_state(Menu.about)
-        if user['lang'] == 'ru':
-            text = 'Для завершения регистрации, расскажите пару слов о себе. '
-            text += 'Можете указать род деятельности и/или ключевые навыки.'
-        else:
-            text = "Ro'yxatdan o'tishni yakunlash uchun bizga o'zingiz haqingizda bir necha so'z ayting. "
-            text += "Siz o'zingizning faoliyat turini va/yoki asosiy ko'nikmalaringizni ko'rsatishingiz mumkin."
-        await message.answer(text=text)
+        match message.text:
+            case 'Другой регион':
+                await state.set_state(Menu.custom_region)
+                await message.answer(text='Пожалуйста напишите свой регион проживания')
+            case "Boshqa mintaqa":
+                await state.set_state(Menu.custom_region)
+                await message.answer(text="Iltimos, yashash joyingizni yozing")
+            case _:
+                user_update(message.chat.id, region=message.text)
+                await state.set_state(Menu.about)
+                if user['lang'] == 'ru':
+                    text = 'Для завершения регистрации, расскажите пару слов о себе. '
+                    text += 'Можете указать род деятельности и/или ключевые навыки.'
+                else:
+                    text = "Ro'yxatdan o'tishni yakunlash uchun bizga o'zingiz haqingizda bir necha so'z ayting. "
+                    text += "Siz o'zingizning faoliyat turini va/yoki asosiy ko'nikmalaringizni ko'rsatishingiz mumkin."
+                await message.answer(text=text)
     else:
         if user['lang'] == 'ru':
             text = 'Пожалуйста выберите регион из списка ниже.'
@@ -147,6 +158,20 @@ async def region_handler(message: Message, state: FSMContext):
             text = "Quyidagi roʻyxatdan hududingizni tanlang."
             regions_kb = kb.regions_kb_uz
         await message.answer(text=text, reply_markup=regions_kb)
+
+
+@dp.message(Menu.custom_region)
+async def custom_region_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    user_update(message.chat.id, region=message.text)
+    await state.set_state(Menu.about)
+    if user['lang'] == 'ru':
+        text = 'Для завершения регистрации, расскажите пару слов о себе. '
+        text += 'Можете указать род деятельности и/или ключевые навыки.'
+    else:
+        text = "Ro'yxatdan o'tishni yakunlash uchun bizga o'zingiz haqingizda bir necha so'z ayting. "
+        text += "Siz o'zingizning faoliyat turini va/yoki asosiy ko'nikmalaringizni ko'rsatishingiz mumkin."
+    await message.answer(text=text)
 
 
 @dp.message(Menu.about)
@@ -166,58 +191,86 @@ async def about_handler(message: Message, state: FSMContext):
 @dp.message(Menu.main_menu)
 async def main_menu_handler(message: Message, state: FSMContext):
     user = user_get_detail(message.chat.id)
-    if user['lang'] == 'ru':
-        match message.text:
-            case 'О компании':
-                await state.set_state(Menu.about_us)
-                text = 'Текст описания о компании'
-                keyboard = kb.back_kb_ru
-            case 'Список вакансий':
-                await state.set_state(Menu.vacancies_list)
-                text = 'Выберите вакансию из списка ниже'
-                keyboard = kb.back_kb_ru
-            case 'Подать заявку':
-                await state.set_state(Menu.order)
-                text = 'Напишите комментарий к заявке'
-                keyboard = kb.back_kb_ru
-            case 'Сменить язык':
-                await state.set_state(Menu.change_lang)
-                text = 'Пожалуйста, укажите язык'
-                keyboard = kb.change_lang_kb_ru
-            case _:
+    match message.text:
+        case 'О компании':
+            await state.set_state(Menu.about_us)
+            text = 'SAG - это лидирующее предприятие по производству ковров и ковровых изделий в Средней Азии, которое '
+            text += 'было основано в 2000 году. На сегодняшний день, по производственным мощностям, SAG является самым '
+            text += 'крупным предприятием на территории Средней Азии и стран СНГ.\n\nПредприятие начало свою '
+            text += 'деятельность как небольшая ткацкая фабрика по производству ковров.На сегодняшний день все '
+            text += 'процессы, начиная от производства нити заканчивая упаковкой конечной ковровой продукции '
+            text += 'осуществляются на самом предприятии.Таким образом, SAG является одним из уникальных предприятий в '
+            text += 'мире, где сконцентрирован весь производственный цикл.'
+            keyboard = kb.back_kb_ru
+        case 'Список вакансий':
+            await state.set_state(Menu.vacancies_list)
+            text = 'Выберите вакансию из списка ниже'
+            keyboard = kb.back_kb_ru
+        case 'Подать заявку':
+            await state.set_state(Menu.order)
+            text = 'Напишите комментарий к заявке'
+            keyboard = kb.back_kb_ru
+        case 'Сменить язык':
+            await state.set_state(Menu.change_lang)
+            text = 'Укажите язык'
+            keyboard = kb.change_lang_kb_ru
+        case "Kompaniya haqida":
+            await state.set_state(Menu.about_us)
+            text = "SAG 2000 - yilda tashkil etilgan bo’lib, Markaziy Osiyodagi yetakchi gilam ishlab chiqaruvchi "
+            text += "kompaniya hisoblanadi.Bugungi kunda SAG ishlab chiqarish quvvati bo‘yicha Markaziy Osiyo va MDH "
+            text += "mamlakatlaridagi eng yirik korxona hisoblanadi.\n\nKorxona o‘z faoliyatini gilam ishlab chiqarish "
+            text += "bo‘yicha kichik to‘quv fabrikasi sifatida boshlagan. Bugungi kunda ip ishlab chiqarishdan tortib, "
+            text += "tayyor gilam mahsulotlarini qadoqlashgacha bo‘lgan barcha jarayonlar korxonaning o‘zida amalga "
+            text += "oshirilmoqda. Shunday qilib, SAG butun ishlab chiqarish tsikli jamlangan dunyodagi noyob "
+            text += "kompaniyalardan biridir."
+            keyboard = kb.back_kb_uz
+        case "Bo'sh ish o'rinlari ro'yxati":
+            await state.set_state(Menu.vacancies_list)
+            text = "Quyidagi ro'yxatdan vakansiyani tanlang"
+            keyboard = kb.back_kb_uz
+        case "Hozir murojaat qiling":
+            await state.set_state(Menu.order)
+            text = "Ilovaga sharh yozing"
+            keyboard = kb.back_kb_uz
+        case "Tilni o'zgartirish":
+            await state.set_state(Menu.change_lang)
+            text = "Tilni ko'rsating"
+            keyboard = kb.change_lang_kb_uz
+        case _:
+            if user['lang'] == 'ru':
                 text = 'Пожалуйста, выберите пункт из меню ниже'
                 keyboard = kb.main_menu_kb_ru
-    else:
-        match message.text:
-            case "Kompaniya haqida":
-                await state.set_state(Menu.about_us)
-                text = "Kompaniya haqida tavsif matni"
-                keyboard = kb.back_kb_uz
-            case "Bo'sh ish o'rinlari ro'yxati":
-                await state.set_state(Menu.vacancies_list)
-                text = "Quyidagi ro'yxatdan vakansiyani tanlang"
-                keyboard = kb.back_kb_uz
-            case "Hozir murojaat qiling":
-                await state.set_state(Menu.order)
-                text = "Ilovaga sharh yozing"
-                keyboard = kb.back_kb_uz
-            case "Tilni o'zgartirish":
-                await state.set_state(Menu.change_lang)
-                text = "Tilni ko'rsating"
-                keyboard = kb.change_lang_kb_uz
-            case _:
+            else:
                 text = "Quyidagi menyudan biror narsani tanlang"
-                keyboard = kb.main_menu_kb_ru
+                keyboard = kb.main_menu_kb_uz
     await message.answer(text=text, reply_markup=keyboard)
 
 
+@dp.message(Menu.about_us)
+async def about_us_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    if user['lang'] == 'ru':
+        text = 'Главное меню'
+        keyboard = kb.main_menu_kb_ru
+    else:
+        text = "Asosiy menyu"
+        keyboard = kb.main_menu_kb_uz
+    await state.set_state(Menu.main_menu)
+    await message.answer(text=text, reply_markup=keyboard)
+
 
 @dp.message()
-async def echo_handler(message: Message):
-    try:
-        await message.send_copy(chat_id=message.chat.id)
-    except TypeError:
-        await message.answer('Error')
+async def echo_handler(message: Message, state: FSMContext):
+    if not user_get_detail(message.chat.id):
+        user_create(message.chat.id)
+    await state.set_state(Menu.lang)
+    text = "Вас приветствует HR-бот SAG Group. История SAG Group берет свое начало с создания фабрики по производству "
+    text += "ковров в 2000 году. На данный момент в состав SAG Group входит более 10 компаний из различных сфер "
+    text += "экономики, многие из которых являются лидерами в своих отраслях.\n\nПожалуйста, укажите язык.\n\n"
+    text += "SAG Group HR botiga xush kelibsiz. SAG Group tarixi 2000 yilda gilam fabrikasining tashkil etilishidan "
+    text += "boshlanadi. Ayni paytda SAG Group tarkibiga iqtisodiyotning turli tarmoqlaridan 10 dan ortiq kompaniyalar "
+    text += "kiradi, ularning aksariyati o‘z sohalarida yetakchi hisoblanadi.\n\nIltimos, tilni tanlang."
+    await message.answer(text, reply_markup=kb.start_kb)
 
 
 async def main():
