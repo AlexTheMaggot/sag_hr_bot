@@ -2,6 +2,7 @@ import asyncio
 from os import getenv
 
 from aiogram import Dispatcher, Bot
+from aiogram.client import bot
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.client.default import DefaultBotProperties
@@ -16,7 +17,7 @@ from db import *
 
 TOKEN = TELEGRAM_TOKEN
 dp = Dispatcher()
-
+bot = None
 
 class Menu(StatesGroup):
     lang = State()
@@ -284,6 +285,30 @@ async def change_lang_handler(message: Message, state: FSMContext):
                 await message.answer("Quyidagi roʻyxatdan tilni tanlang.", reply_markup=kb.change_lang_kb_uz)
 
 
+@dp.message(Menu.order)
+async def order_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    await state.set_state(Menu.main_menu)
+    if message.text == 'Назад':
+        await message.answer('Главное меню', reply_markup=kb.main_menu_kb_ru)
+    elif message.text == "Orqaga":
+        await message.answer('Asosiy menyu', reply_markup=kb.main_menu_kb_uz)
+    else:
+        text = 'Новая заявка!\n\n'
+        text += f'Имя: {user["name"]}\n'
+        text += f'Номер телефона: {user["phone_number"]}\n'
+        text += f'Предпочитаемый язык: {'Русский' if user["lang"] == 'ru' else 'Узбекский'}\n'
+        text += f'Регион: {user["region"]}\n'
+        text += f'Дополнительная информация: {user["about"]}\n\n'
+        text += f'Комментарий: {message.text}'
+        await bot.send_message(chat_id=-1002456307374, text=text)
+        if user['lang'] == 'ru':
+            await message.answer('Ваша заявка отправлена', reply_markup=kb.main_menu_kb_ru)
+        else:
+            await message.answer("Sizning arizangiz yuborildi", reply_markup=kb.main_menu_kb_uz)
+
+
+
 @dp.message()
 async def echo_handler(message: Message, state: FSMContext):
     if not user_get_detail(message.chat.id):
@@ -299,6 +324,7 @@ async def echo_handler(message: Message, state: FSMContext):
 
 
 async def main():
+    global bot
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     await dp.start_polling(bot)
 
