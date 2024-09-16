@@ -44,6 +44,8 @@ b = {
     'change_lang_uz': KeyboardButton(text="Tilni o'zgartirish"),
     'back_ru': KeyboardButton(text='Назад'),
     'back_uz': KeyboardButton(text="Orqaga"),
+    'main_ru': KeyboardButton(text='На главное меню'),
+    'main_uz': KeyboardButton(text="Asosiy menyuga"),
 }
 
 start_kb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=[[b['ru'], b['uz']]])
@@ -123,5 +125,51 @@ change_lang_kb_uz = ReplyKeyboardMarkup(
     keyboard=[
         [b['ru'], b['uz'],],
         [b['back_uz']],
+    ]
+)
+
+vacancies_ru = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [KeyboardButton(text='Продавец-консультант (Ташкент)')],
+        [KeyboardButton(text='Специалист в Финансовый Отдел (Нарпай)')],
+        [KeyboardButton(text='Грузчик (Ташкент)')],
+        [KeyboardButton(text='Специалист по отделке края ковров (оверлок) (Ташкент)')],
+        [KeyboardButton(text='SMM-менеджер мобилограф (Самарканд)')],
+        [KeyboardButton(text='Назад')],
+    ]
+)
+
+vacancies_uz = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [KeyboardButton(text="Sotuvchi-maslahatchi (Toshkent)")],
+        [KeyboardButton(text="Moliya bo‘limiga mutaxassis (Narpai)")],
+        [KeyboardButton(text="Yuk tashuvchi (Toshkent)")],
+        [KeyboardButton(text="Gilam chetlarini tikish bo‘yicha mutaxassis (overlok) (Toshkent)")],
+        [KeyboardButton(text="SMM menejeri/mobilograf (Samarqand)")],
+        [KeyboardButton(text="Orqaga")],
+    ]
+)
+
+vacancies_detail_kb_ru = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['order_ru']],
+        [b['back_ru']],
+        [b['main_ru']],
+    ]
+)
+
+vacancies_detail_kb_uz = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    keyboard=[
+        [b['order_uz']],
+        [b['back_uz']],
+        [b['main_uz']],
     ]
 )
