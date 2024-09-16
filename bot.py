@@ -259,6 +259,31 @@ async def about_us_handler(message: Message, state: FSMContext):
     await message.answer(text=text, reply_markup=keyboard)
 
 
+@dp.message(Menu.change_lang)
+async def change_lang_handler(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    match message.text:
+        case 'Русский':
+            user_update(message.chat.id, lang='ru')
+            await state.set_state(Menu.main_menu)
+            await message.answer('Язык изменен!', reply_markup=kb.main_menu_kb_ru)
+        case "O'zbek":
+            user_update(message.chat.id, lang="uz")
+            await state.set_state(Menu.main_menu)
+            await message.answer("Til o'zgartirildi!", reply_markup=kb.main_menu_kb_uz)
+        case 'Назад':
+            await state.set_state(Menu.main_menu)
+            await message.answer('Главное меню', reply_markup=kb.main_menu_kb_ru)
+        case "Orqaga":
+            await state.set_state(Menu.main_menu)
+            await message.answer("Asosiy menyu", reply_markup=kb.main_menu_kb_uz)
+        case _:
+            if user['lang'] == 'ru':
+                await message.answer('Пожалуйста выберите язык из списка ниже.', reply_markup=kb.change_lang_kb_ru)
+            else:
+                await message.answer("Quyidagi roʻyxatdan tilni tanlang.", reply_markup=kb.change_lang_kb_uz)
+
+
 @dp.message()
 async def echo_handler(message: Message, state: FSMContext):
     if not user_get_detail(message.chat.id):
