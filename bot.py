@@ -560,18 +560,107 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
     await message.answer(text=text, reply_markup=keyboard)
 
 
+@dp.message(Menu.vacancies_detail)
+async def vacancies_detail(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    match message.text:
+        case "Подать заявку":
+            await state.set_state(Menu.vacancies_order)
+            text = "Укажите комментарий к заявке"
+            keyboard = kb.back_kb_ru
+        case "Назад":
+            await state.set_state(Menu.vacancies_list)
+            text = 'Список вакансий'
+            keyboard = kb.vacancies_ru
+        case "На главное меню":
+            await state.set_state(Menu.main_menu)
+            text = "Главное меню"
+            keyboard = kb.main_menu_kb_ru
+        case "Hozir murojaat qiling":
+            await state.set_state(Menu.vacancies_order)
+            text = "Iltimos, arizangizga sharh qoldiring"
+            keyboard = kb.back_kb_uz
+        case "Orqaga":
+            await state.set_state(Menu.vacancies_list)
+            text = "Bo'sh ish o'rinlari ro'yxati"
+            keyboard = kb.vacancies_uz
+        case "Asosiy menyuga":
+            await state.set_state(Menu.main_menu)
+            text = "Asosiy menyu"
+            keyboard = kb.main_menu_kb_uz
+        case _:
+            if user['lang'] == 'ru':
+                text = 'Пожалуйста выберите пункт ниже'
+                keyboard = kb.vacancies_detail_kb_ru
+            else:
+                text = "Quyidagi elementni tanlang"
+                keyboard = kb.vacancies_detail_kb_uz
+    await message.answer(text=text, reply_markup=keyboard)
+
+
+@dp.message(Menu.vacancies_order)
+async def vacancies_order(message: Message, state: FSMContext):
+    user = user_get_detail(message.chat.id)
+    match message.text:
+        case 'Назад':
+            await state.set_state(Menu.vacancies_list)
+            text = "Список вакансий"
+            keyboard = kb.vacancies_ru
+        case "Orqaga":
+            await state.set_state(Menu.vacancies_list)
+            text = "Bo'sh ish o'rinlari ro'yxati"
+            keyboard = kb.vacancies_uz
+        case _:
+            data = await state.get_data()
+            order_text = 'Новая заявка!\n\n'
+            order_text += f'Вакансия: {data["vacancy"]}\n'
+            order_text += f'Имя: {user["name"]}\n'
+            order_text += f'Номер телефона: {user["phone_number"]}\n'
+            order_text += f'Предпочитаемый язык: {'Русский' if user["lang"] == 'ru' else 'Узбекский'}\n'
+            order_text += f'Регион: {user["region"]}\n'
+            order_text += f'Дополнительная информация: {user["about"]}\n\n'
+            order_text += f'Комментарий: {message.text}'
+            await bot.send_message(chat_id=-1002456307374, text=order_text)
+            await state.set_state(Menu.main_menu)
+            if user['lang'] == 'ru':
+                text = 'Благодарим вас за предоставленную информацию. Сотрудники HR-отдела ознакомятся с вашей кандидатурой и вернутся с обратной связью!'
+                keyboard = kb.main_menu_kb_ru
+            else:
+                text = "Berilgan ma’lumotlaringiz uchun rahmat. HR-bo'limi xodimlari sizning nomzodingizni ko'rib chiqadi va fikr-mulohazalarini bildiradi!"
+                keyboard = kb.main_menu_kb_uz
+    await message.answer(text=text, reply_markup=keyboard)
+
+
+
 @dp.message()
 async def echo_handler(message: Message, state: FSMContext):
-    if not user_get_detail(message.chat.id):
+    user = user_get_detail(message.chat.id)
+    if not user:
         user_create(message.chat.id)
-    await state.set_state(Menu.lang)
-    text = "Вас приветствует HR-бот SAG Group. История SAG Group берет свое начало с создания фабрики по производству "
-    text += "ковров в 2000 году. На данный момент в состав SAG Group входит более 10 компаний из различных сфер "
-    text += "экономики, многие из которых являются лидерами в своих отраслях.\n\nПожалуйста, укажите язык.\n\n"
-    text += "SAG Group HR botiga xush kelibsiz. SAG Group tarixi 2000 yilda gilam fabrikasining tashkil etilishidan "
-    text += "boshlanadi. Ayni paytda SAG Group tarkibiga iqtisodiyotning turli tarmoqlaridan 10 dan ortiq kompaniyalar "
-    text += "kiradi, ularning aksariyati o‘z sohalarida yetakchi hisoblanadi.\n\nIltimos, tilni tanlang."
-    await message.answer(text, reply_markup=kb.start_kb)
+        await state.set_state(Menu.lang)
+        text = "Вас приветствует HR-бот SAG Group. История SAG Group берет свое начало с создания фабрики по производству "
+        text += "ковров в 2000 году. На данный момент в состав SAG Group входит более 10 компаний из различных сфер "
+        text += "экономики, многие из которых являются лидерами в своих отраслях.\n\nПожалуйста, укажите язык.\n\n"
+        text += "SAG Group HR botiga xush kelibsiz. SAG Group tarixi 2000 yilda gilam fabrikasining tashkil etilishidan "
+        text += "boshlanadi. Ayni paytda SAG Group tarkibiga iqtisodiyotning turli tarmoqlaridan 10 dan ortiq kompaniyalar "
+        text += "kiradi, ularning aksariyati o‘z sohalarida yetakchi hisoblanadi.\n\nIltimos, tilni tanlang."
+        await message.answer(text, reply_markup=kb.start_kb)
+    else:
+        if user['about']:
+            await state.set_state(Menu.main_menu)
+            if user['lang'] == 'ru':
+                await message.answer(text='Главное меню', reply_markup=kb.main_menu_kb_ru)
+            else:
+                await message.answer(text="Asosiy menyu", reply_markup=kb.main_menu_kb_uz)
+        else:
+            await state.set_state(Menu.lang)
+            text = "Вас приветствует HR-бот SAG Group. История SAG Group берет свое начало с создания фабрики по производству "
+            text += "ковров в 2000 году. На данный момент в состав SAG Group входит более 10 компаний из различных сфер "
+            text += "экономики, многие из которых являются лидерами в своих отраслях.\n\nПожалуйста, укажите язык.\n\n"
+            text += "SAG Group HR botiga xush kelibsiz. SAG Group tarixi 2000 yilda gilam fabrikasining tashkil etilishidan "
+            text += "boshlanadi. Ayni paytda SAG Group tarkibiga iqtisodiyotning turli tarmoqlaridan 10 dan ortiq kompaniyalar "
+            text += "kiradi, ularning aksariyati o‘z sohalarida yetakchi hisoblanadi.\n\nIltimos, tilni tanlang."
+            await message.answer(text, reply_markup=kb.start_kb)
 
 
 async def main():
