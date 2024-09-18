@@ -337,6 +337,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Официальное трудоустройство и социальные гарантии."
             keyboard = kb.vacancies_detail_kb_ru
         case 'Специалист в Финансовый Отдел (Нарпай)':
+            await state.update_data({'vacancy': 'Специалист в Финансовый Отдел (Нарпай)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Обязанности:\n"
             text += "    анализ фактических затрат;\n"
@@ -360,6 +361,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Возможность карьерного роста."
             keyboard = kb.vacancies_detail_kb_ru
         case 'Грузчик (Ташкент)':
+            await state.update_data({'vacancy': 'Грузчик (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Обязанности:\n"
             text += "    Погрузка и выгрузка товаров;\n"
@@ -381,6 +383,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Официальное трудоустройство и социальные гарантии."
             keyboard = kb.vacancies_detail_kb_ru
         case 'Специалист по отделке края ковров (оверлок) (Ташкент)':
+            await state.update_data({'vacancy': 'Специалист по отделке края ковров (оверлок) (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Обязанности:\n"
             text += "    Окантовка краев ковра на станке;\n"
@@ -402,6 +405,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Официальное трудоустройство и социальные гарантии."
             keyboard = kb.vacancies_detail_kb_ru
         case 'SMM-менеджер мобилограф (Самарканд)':
+            await state.update_data({'vacancy': 'SMM-менеджер мобилограф (Самарканд)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Обязанности:\n"
             text += "    1. Управление социальными сетями:\n"
@@ -430,6 +434,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Возможность реализовать свои креативные идеи и проекты."
             keyboard = kb.vacancies_detail_kb_ru
         case "Sotuvchi-maslahatchi (Toshkent)":
+            await state.update_data({'vacancy': 'Продавец-консультант (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Mas'uliyat:\n"
             text += "    • mijozlarga maslahat berish;\n"
@@ -451,6 +456,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Rasmiy bandlik va ijtimoiy kafolatlar."
             keyboard = kb.vacancies_detail_kb_uz
         case "Moliya bo‘limiga mutaxassis (Narpai)":
+            await state.update_data({'vacancy': 'Специалист в Финансовый Отдел (Нарпай)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Mas'uliyat:\n"
             text += "    • Amalda bo’lgan xarajatlar tahlili;\n"
@@ -474,6 +480,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • martaba o'sishi uchun imkoniyatlar."
             keyboard = kb.vacancies_detail_kb_uz
         case "Yuk tashuvchi (Toshkent)":
+            await state.update_data({'vacancy': 'Грузчик (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Mas'uliyat:\n"
             text += "    • Tovarlarni yuklash va tushirish;\n"
@@ -495,6 +502,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Rasmiy bandlik va ijtimoiy kafolatlar."
             keyboard = kb.vacancies_detail_kb_uz
         case "Gilam chetlarini tikish bo‘yicha mutaxassis (overlok) (Toshkent)":
+            await state.update_data({'vacancy': 'Специалист по отделке края ковров (оверлок) (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Ma’suliyat:\n"
             text += "    • Gilamning chetlarini stanokda qirqish;\n"
@@ -515,6 +523,7 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Rasmiy bandlik va ijtimoiy kafolatlar."
             keyboard = kb.vacancies_detail_kb_uz
         case "SMM menejeri/mobilograf (Samarqand)":
+            await state.update_data({'vacancy': 'SMM-менеджер мобилограф (Самарканд)'})
             await state.set_state(Menu.vacancies_detail)
             text = "Mas'uliyat:\n"
             text += "    1. Ijtimoiy tarmoqlarni boshqarish:\n"
