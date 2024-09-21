@@ -336,30 +336,6 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Дружелюбная и поддерживающая рабочая среда;\n"
             text += "    Официальное трудоустройство и социальные гарантии."
             keyboard = kb.vacancies_detail_kb_ru
-        case 'Специалист в Финансовый Отдел (Нарпай)':
-            await state.update_data({'vacancy': 'Специалист в Финансовый Отдел (Нарпай)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Обязанности:\n"
-            text += "    анализ фактических затрат;\n"
-            text += "    расчет себестоимости;\n"
-            text += "    анализ разниц между плановой и фактической себестоимостью;\n"
-            text += "    ввод первичных данных в систему САП;\n"
-            text += "    контроль остатков предприятия;\n"
-            text += "    сверка балансовых счетов с анализом фактических активов;\n"
-            text += "    расчет заработной платы;\n"
-            text += "    финансовый анализ по запросу.\n\n"
-            text += "🔸Требования:\n"
-            text += "    Высшее образование;\n"
-            text += "    Уверенный пользователь ПК;\n"
-            text += "    Знание Microsoft Office.\n\n"
-            text += "🔹Условия:\n"
-            text += "    Официальное трудоустройство;\n"
-            text += "    Комфортабельный офис по адресу: ул.Зирабулок,43;\n"
-            text += "    График работы 6/1 с 9:00 до 18:00;\n"
-            text += "    Заработная плата обсуждается индивидуально;\n"
-            text += "    Кандидатам из другого города предоставляется гостиница, обед за счет компании;\n"
-            text += "    Возможность карьерного роста."
-            keyboard = kb.vacancies_detail_kb_ru
         case 'Грузчик (Ташкент)':
             await state.update_data({'vacancy': 'Грузчик (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
@@ -433,6 +409,47 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Дружелюбная команда и комфортные условия работы.\n"
             text += "    Возможность реализовать свои креативные идеи и проекты."
             keyboard = kb.vacancies_detail_kb_ru
+        case 'Стажер HR-аналитик (Самарканд)':
+            await state.update_data({'vacancy': 'Стажер HR-аналитик (Самарканд)'})
+            await state.set_state(Menu.vacancies_detail)
+            text = "🔸Обязанности:\n"
+            text += "    -Формирование бюджета затрат на персонал, факторный анализ.\n"
+            text += "    - Внедрение системы оплаты труда и премирования для компании на основе KPI.\n"
+            text += "    -Ежемесячная отчетность о движении персонала, его качественной и количественной структуре, текучести кадров.\n"
+            text += "    -Отчётность по укомплектованности/достаточности персонала.\n"
+            text += "    -Анализ оттока персонала.\n"
+            text += "    -Внедрение системы грейдов.\n"
+            text += "🔸Требования:\n"
+            text += "    -Высшее образование (экономическое, бухгалтерское, финансовое);\n"
+            text += "    -Желателен опыт работы по направлению, но необязателен - всему обучим;\n"
+            text += "    -Уверенный пользователь офисных программ (Excel, 1C).\n"
+            text += "🔹Условия:\n"
+            text += "    -Комфортабельный офис по адресу: Катта Узбек Тракт, 14;\n"
+            text += "    -График работы 5/2 с 9:00 до 18:00;\n"
+            text += "    -Оплачиваемая стажировка - 3 месяца, далее официальное оформление в штат;\n"
+            text += "    -Транспорт и обед за счет компании;\n"
+            text += "    -Возможность развития профессиональных навыков и приобретения ценного опыта."
+            keyboard = kb.vacancies_detail_kb_ru
+        case 'Аккаунт-менеджер (Ташкент)':
+            await state.update_data({'vacancy': 'Аккаунт-менеджер (Ташкент)'})
+            await state.set_state(Menu.vacancies_detail)
+            text = "🔸Обязанности:\n"
+            text += "    - Обработка обращений от клиентов (чаты в соц.сетях);\n"
+            text += "    - Совершение исходящих звонков клиентам;\n"
+            text += "    - Выстраивание долгосрочных отношений с клиентами;\n"
+            text += "    - Консультирование и стимулирование клиентов к продажам.\n"
+            text += "🔸Требования:\n"
+            text += "    - Высшее образование;\n"
+            text += "    - Опыт работы приветствуется, но необязателен;\n"
+            text += "    - Желательно наличие профильных курсов;\n"
+            text += "    - Уверенный пользователь ПК;\n"
+            text += "    - Высокая скорость печати (мессенджеры, соц.сети);\n"
+            text += "    - Владение русским и узбекским языками.\n"
+            text += "🔹Условия:\n"
+            text += "    - Официальное трудоустройство;\n"
+            text += "    - Комфортабельный коворкинг по адресу: улица Богибустон, 186 (Impact Technology Hub);\n"
+            text += "    - Возможность карьерного роста.\n"
+            keyboard = kb.vacancies_detail_kb_ru
         case "Sotuvchi-maslahatchi (Toshkent)":
             await state.update_data({'vacancy': 'Продавец-консультант (Ташкент)'})
             await state.set_state(Menu.vacancies_detail)
@@ -454,30 +471,6 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Martaba o'sishi va rivojlanish;\n"
             text += "    • Do'stona va qo'llab-quvvatlovchi ish muhiti;\n"
             text += "    • Rasmiy bandlik va ijtimoiy kafolatlar."
-            keyboard = kb.vacancies_detail_kb_uz
-        case "Moliya bo‘limiga mutaxassis (Narpai)":
-            await state.update_data({'vacancy': 'Специалист в Финансовый Отдел (Нарпай)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Mas'uliyat:\n"
-            text += "    • Amalda bo’lgan xarajatlar tahlili;\n"
-            text += "    • xarajatlarni hisoblash;\n"
-            text += "    • rejalashtirilgan va amaliy xarajatlar o'rtasidagi farqlarni tahlil qilish;\n"
-            text += "    • SAP tizimiga birlamchi ma'lumotlarni kiritish;\n"
-            text += "    • korxona qoldiqlarini nazorat qilish;\n"
-            text += "    • balans schyotlarini haqiqiy aktivlar tahlili bilan solishtirish;\n"
-            text += "    • ish haqini hisoblash;\n"
-            text += "    • so'rov bo'yicha moliyaviy tahlil.\n\n"
-            text += "🔸Talablar:\n"
-            text += "    • Oliy ma’lumot;\n"
-            text += "    • Ishonchli kompyuter foydalanuvchisi;\n"
-            text += "    • Microsoft Office dasturini bilish.\n\n"
-            text += "🔹Sharoitlar:\n"
-            text += "    • Rasmiy ish bilan taminlash;\n"
-            text += "    • Zirabulok ko'chasi, 43-uy manzilidagi shinam ofis;\n"
-            text += "    • Ish vaqti 6/1 9:00 dan 18:00 gacha;\n"
-            text += "    • Ish haqi alohida muhokama qilinadi;\n"
-            text += "    • Boshqa shahardan kelgan nomzodlar kompaniya hisobidan mehmonxona va tushlik bilan ta’minlanadi;\n"
-            text += "    • martaba o'sishi uchun imkoniyatlar."
             keyboard = kb.vacancies_detail_kb_uz
         case "Yuk tashuvchi (Toshkent)":
             await state.update_data({'vacancy': 'Грузчик (Ташкент)'})
@@ -550,6 +543,47 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Martaba o'sishi uchun imkoniyat.\n"
             text += "    • Do'stona va qo'llab-quvvatlovchi ish muhiti.\n"
             text += "    • Ijodiy g'oyalar va loyihalarni amalga oshirish imkoniyati."
+            keyboard = kb.vacancies_detail_kb_uz
+        case "HR-analitik stajyori (Samarkand)":
+            await state.update_data({'vacancy': 'Стажер HR-аналитик (Самарканд)'})
+            await state.set_state(Menu.vacancies_detail)
+            text = "🔸Vazifalar:\n"
+            text += "    - Xodimlar uchun xarajatlar byudjetini shakllantirish, faktorlash tahlili.\n"
+            text += "    - KPI asosida kompaniya uchun mehnat haqini va mukofotlash tizimini joriy etish.\n"
+            text += "    - Har oy xodimlar harakati, ularning sifat va miqdoriy tuzilishi, xodimlar oqimi bo‘yicha hisobot tayyorlash.\n"
+            text += "    - Xodimlar soni/to‘g‘riligini bo‘yicha hisobot.\n"
+            text += "    - Xodimlar oqimini tahlil qilish.\n"
+            text += "    - Greyd tizimini joriy etish.\n"
+            text += "🔸Talablar:\n"
+            text += "    - Oliy ta’lim (iqtisodiyot, buxgalteriya, moliya).\n"
+            text += "    - Yo‘nalish bo‘yicha ish tajribasi afzallik, ammo shart emas - hamma narsaga o‘rgatamiz.\n"
+            text += "    - Ofis dasturlaridan (Excel, 1C) unumli foydalanish.\n"
+            text += "🔹Sharoitlar:\n"
+            text += "    - Manzil: Katta O‘zbekiston Trakt, 14, qulay ofis.\n"
+            text += "    - Ish rejasi: 5/2, 09:00 dan 18:00 gacha.\n"
+            text += "    - To‘lanadigan stajirovka - 3 oy, keyin rasmiy ishga qabul qilish.\n"
+            text += "    - Transport va tushlik kompaniya hisobidan.\n"
+            text += "    - Professional ko‘nikmalarni rivojlantirish va qimmatli tajriba orttirish imkoniyati.\n"
+            keyboard = kb.vacancies_detail_kb_uz
+        case "Akkaunt menejeri (Toshkent)":
+            await state.update_data({'vacancy': 'Аккаунт-менеджер (Ташкент)'})
+            await state.set_state(Menu.vacancies_detail)
+            text = "🔸Mas'uliyat:\n"
+            text += "    - mijozlar so'rovlarini qayta ishlash (ijtimoiy tarmoqlardagi chatlar);\n"
+            text += "    - mijozlarga chiquvchi qo'ng'iroqlarni amalga oshirish;\n"
+            text += "    - mijozlar bilan uzoq muddatli munosabatlarni o'rnatish;\n"
+            text += "    - konsultatsiya va mijozlarni tovarni sotib olishi uchun rag'batlantirish.\n"
+            text += "🔸Talablar:\n"
+            text += "    - oliy ma'lumot;\n"
+            text += "    - Ish tajribasi maqullanadi, lekin shart emas;\n"
+            text += "    - Ixtisoslashtirilgan kurslarga ega bo'lish maqsadga muvofiq;\n"
+            text += "    - Ishonchli kompyuter foydalanuvchisi;\n"
+            text += "    - Tez matn yozish qobiliyati (messenjerlar, ijtimoiy tarmoqlar);\n"
+            text += "    - Rus va o‘zbek tillarini bilish.\n"
+            text += "🔹Sharoitlar:\n"
+            text += "    - Rasmiy ish bilan taminlash;\n"
+            text += "    - Bog‘ibuston ko‘chasi, 186-uyda (Impact Technology Hub) qulay kovorking maydoni;\n"
+            text += "    - martaba o'sishi uchun imkoniyatlar.\n"
             keyboard = kb.vacancies_detail_kb_uz
         case "Назад":
             await state.set_state(Menu.main_menu)
