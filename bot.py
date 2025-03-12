@@ -1,6 +1,4 @@
 import asyncio
-from os import getenv
-
 from aiogram import Dispatcher, Bot
 from aiogram.client import bot
 from aiogram.filters import CommandStart
@@ -14,7 +12,7 @@ import kb
 from config import *
 from db import *
 
-
+ORDERS_COUNTER = 100
 TOKEN = TELEGRAM_TOKEN
 dp = Dispatcher()
 bot = None
@@ -380,75 +378,27 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    Дружелюбная и поддерживающая рабочая среда;\n"
             text += "    Официальное трудоустройство и социальные гарантии."
             keyboard = kb.vacancies_detail_kb_ru
-        case 'SMM-менеджер мобилограф (Самарканд)':
-            await state.update_data({'vacancy': 'SMM-менеджер мобилограф (Самарканд)'})
+        case 'Рабочий на производство (Самарканд)':
+            await state.update_data({'vacancy': 'Рабочий на производство (Самарканд)'})
             await state.set_state(Menu.vacancies_detail)
             text = "🔸Обязанности:\n"
-            text += "    1. Управление социальными сетями:\n"
-            text += "        Разработка и реализация стратегии продвижения в социальных сетях (Instagram, Facebook, и другие).\n"
-            text += "        Создание и публикация оригинального контента, включая фото и видео, которые демонстрируют продукцию и рассказывают о нашем бренде.\n"
-            text += "        Взаимодействие с аудиторией: ответ на комментарии и сообщения, проведение конкурсов и акций.\n"
-            text += "    2. Контент-маркетинг:\n"
-            text += "        Разработка и реализация контент-плана, включая статьи, блоги и другие материалы.\n"
-            text += "        Работа с командой дизайнеров для создания визуальных материалов, соответствующих бренду.\n"
-            text += "        Анализ эффективности контента и его оптимизация.\n"
-            text += "    3. Планирование и реализация маркетинговых кампаний\n"
-            text += "        Разработка и проведение рекламных кампаний, направленных на увеличение продаж и повышение узнаваемости бренда.\n"
-            text += "        Анализ рынка и конкурентов для выявления новых возможностей и тенденций.\n"
-            text += "        Подготовка отчетов о результатах кампаний и предложений по их улучшению.\n"
-            text += "    4. Фотосъемка и видеосъемка:\n"
-            text += "        Организация и проведение фотосессий и видеосъемок для продвижения продукции.\n"
-            text += "        Пост-обработка и редактирование визуальных материалов.\n\n"
+            text += "    - Работа на производственной линии;\n"
+            text += "    - Контроль качества продукции на всех этапах производства;\n"
+            text += "    - Обслуживание и настройка оборудования;\n"
+            text += "    - Упаковка готовой продукции и подготовка к отгрузке;\n"
+            text += "    - Соблюдение стандартов безопасности на рабочем месте.\n"
             text += "🔸Требования:\n"
-            text += "    Опыт работы в маркетинге от 2-х лет, желательно в сфере розничной торговли или товаров для дома;\n"
-            text += "    Умение работать с графическими редакторами (Adobe Photoshop, Illustrator и т.д.) и программами для редактирования видео;\n"
-            text += "    Опыт управления социальными сетями и создания контента.\n\n"
+            text += "    - Ответственность и внимательность к деталям;\n"
+            text += "    - Желание работать в команде и обучаться;\n"
+            text += "    - Физическая выносливость;\n"
+            text += "    - Готовность к сменному графику.\n"
             text += "🔹Условия:\n"
-            text += "    Конкурентоспособная заработная плата.\n"
-            text += "    Возможность профессионального и карьерного роста.\n"
-            text += "    Дружелюбная команда и комфортные условия работы.\n"
-            text += "    Возможность реализовать свои креативные идеи и проекты."
-            keyboard = kb.vacancies_detail_kb_ru
-        case 'Стажер HR-аналитик (Самарканд)':
-            await state.update_data({'vacancy': 'Стажер HR-аналитик (Самарканд)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Обязанности:\n"
-            text += "    -Формирование бюджета затрат на персонал, факторный анализ.\n"
-            text += "    - Внедрение системы оплаты труда и премирования для компании на основе KPI.\n"
-            text += "    -Ежемесячная отчетность о движении персонала, его качественной и количественной структуре, текучести кадров.\n"
-            text += "    -Отчётность по укомплектованности/достаточности персонала.\n"
-            text += "    -Анализ оттока персонала.\n"
-            text += "    -Внедрение системы грейдов.\n"
-            text += "🔸Требования:\n"
-            text += "    -Высшее образование (экономическое, бухгалтерское, финансовое);\n"
-            text += "    -Желателен опыт работы по направлению, но необязателен - всему обучим;\n"
-            text += "    -Уверенный пользователь офисных программ (Excel, 1C).\n"
-            text += "🔹Условия:\n"
-            text += "    -Комфортабельный офис по адресу: Катта Узбек Тракт, 14;\n"
-            text += "    -График работы 5/2 с 9:00 до 18:00;\n"
-            text += "    -Оплачиваемая стажировка - 3 месяца, далее официальное оформление в штат;\n"
-            text += "    -Транспорт и обед за счет компании;\n"
-            text += "    -Возможность развития профессиональных навыков и приобретения ценного опыта."
-            keyboard = kb.vacancies_detail_kb_ru
-        case 'Аккаунт-менеджер (Ташкент)':
-            await state.update_data({'vacancy': 'Аккаунт-менеджер (Ташкент)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Обязанности:\n"
-            text += "    - Обработка обращений от клиентов (чаты в соц.сетях);\n"
-            text += "    - Совершение исходящих звонков клиентам;\n"
-            text += "    - Выстраивание долгосрочных отношений с клиентами;\n"
-            text += "    - Консультирование и стимулирование клиентов к продажам.\n"
-            text += "🔸Требования:\n"
-            text += "    - Высшее образование;\n"
-            text += "    - Опыт работы приветствуется, но необязателен;\n"
-            text += "    - Желательно наличие профильных курсов;\n"
-            text += "    - Уверенный пользователь ПК;\n"
-            text += "    - Высокая скорость печати (мессенджеры, соц.сети);\n"
-            text += "    - Владение русским и узбекским языками.\n"
-            text += "🔹Условия:\n"
-            text += "    - Официальное трудоустройство;\n"
-            text += "    - Комфортабельный коворкинг по адресу: улица Богибустон, 186 (Impact Technology Hub);\n"
-            text += "    - Возможность карьерного роста.\n"
+            text += "    - Стабильную заработную плату;\n"
+            text += "    - Обед и транспорт за счет компании;\n"
+            text += "    - Обучение на рабочем месте;\n"
+            text += "    - Возможность карьерного роста;\n"
+            text += "    - Социальные гарантии и льготы;\n"
+            text += "    - Дружный коллектив и комфортные условия труда.\n"
             keyboard = kb.vacancies_detail_kb_ru
         case "Sotuvchi-maslahatchi (Toshkent)":
             await state.update_data({'vacancy': 'Продавец-консультант (Ташкент)'})
@@ -515,75 +465,27 @@ async def vacancies_list_handler(message: Message, state: FSMContext):
             text += "    • Do'stona va qo'llab-quvvatlovchi ish muhiti;\n"
             text += "    • Rasmiy bandlik va ijtimoiy kafolatlar."
             keyboard = kb.vacancies_detail_kb_uz
-        case "SMM menejeri/mobilograf (Samarqand)":
-            await state.update_data({'vacancy': 'SMM-менеджер мобилограф (Самарканд)'})
+        case "Ishlab chiqarish ishchisi (Samarqand)":
+            await state.update_data({'vacancy': 'Рабочий на производство (Самарканд)'})
             await state.set_state(Menu.vacancies_detail)
             text = "🔸Mas'uliyat:\n"
-            text += "    1. Ijtimoiy tarmoqlarni boshqarish:\n"
-            text += "        • Ijtimoiy tarmoqlarda (Instagram, Facebook va boshqalar) reklama strategiyasini ishlab chiqish va amalga oshirish.\n"
-            text += "        • Mahsulotlarni ko'rsatadigan va brendimiz haqida gapiradigan fotosuratlar va videolarni o'z ichiga olgan original kontentni yaratish va nashr etish.\n"
-            text += "        • Tomoshabinlar bilan o'zaro aloqa: sharhlar va xabarlarga javob berish, tanlovlar va aksiyalarni o'tkazish.\n"
-            text += "    2. Kontent marketingi:\n"
-            text += "        • Maqolalar, bloglar va boshqa materiallarni o'z ichiga olgan kontent rejasini ishlab chiqish va amalga oshirish.\n"
-            text += "        • Brendga mos keladigan visual materiallar yaratish uchun dizayn jamoasi bilan ishlash.\n"
-            text += "        • Kontent samaradorligini tahlil qilish va uni optimallashtirish.\n"
-            text += "    3. Marketing kampaniyalarini rejalashtirish va amalga oshirish\n"
-            text += "        • savdo hajmini oshirish va brend xabardorligini oshirishga qaratilgan reklama kampaniyalarini ishlab chiqish va amalga oshirish.\n"
-            text += "        • Yangi imkoniyatlar va tendentsiyalarni aniqlash uchun bozor va raqobatchilar tahlilini o’tkazish.\n"
-            text += "        • Kampaniya natijalari bo‘yicha hisobotlar va ularni takomillashtirish bo‘yicha takliflar tayyorlash.\n"
-            text += "    4. Fotografiya va videografiya:\n"
-            text += "        • Mahsulotlarni reklama qilish uchun fotosessiyalar va videofilmlar tashkil etish va o‘tkazish.\n"
-            text += "        • Vizual materiallarni qayta ishlash va tahrirlash.\n\n"
+            text += "    - Ishlab chiqarish liniyasida ishlash;\n"
+            text += "    - Ishlab chiqarishning barcha bosqichlarida mahsulot sifatini nazorat qilish;\n"
+            text += "    - Uskunalarga texnik xizmat ko’rsatishva sozlash;\n"
+            text += "    - Tayyor mahsulotni qadoqlash va jo’natishga tayyorlash;\n"
+            text += "    - Ish joyidagi xavfsizlik standartlarini ta’minlash.\n"
             text += "🔸Talablar:\n"
-            text += "    • Marketing sohasida kamida 2 yillik ish tajribasi, donabay yoki uy-roʻzgʻor buyumlari sotish sohasida tajribangiz bo’lsa, mamnuniyat bilan qabul qilinadi;\n"
-            text += "    • Grafik muharrirlar (Adobe Photoshop, Illustrator va boshqalar) va video tahrirlash dasturlari bilan ishlash qobiliyati;\n"
-            text += "    • Ijtimoiy tarmoqlarni boshqarish va kontent yaratish tajribasi.\n\n"
+            text += "    - Mas’uliyat va tafsilotlarga e’tibor berish;\n"
+            text += "    - Jamoada ishlash va o’rganish istagi;\n"
+            text += "    - Jismoniy chidamliklar;\n"
+            text += "    - Smena jadvalidagi ishga tayyor turish.\n"
             text += "🔹Sharoitlar:\n"
-            text += "    • Raqobatbardosh ish haqi.\n"
-            text += "    • Martaba o'sishi uchun imkoniyat.\n"
-            text += "    • Do'stona va qo'llab-quvvatlovchi ish muhiti.\n"
-            text += "    • Ijodiy g'oyalar va loyihalarni amalga oshirish imkoniyati."
-            keyboard = kb.vacancies_detail_kb_uz
-        case "HR-analitik stajyori (Samarkand)":
-            await state.update_data({'vacancy': 'Стажер HR-аналитик (Самарканд)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Vazifalar:\n"
-            text += "    - Xodimlar uchun xarajatlar byudjetini shakllantirish, faktorlash tahlili.\n"
-            text += "    - KPI asosida kompaniya uchun mehnat haqini va mukofotlash tizimini joriy etish.\n"
-            text += "    - Har oy xodimlar harakati, ularning sifat va miqdoriy tuzilishi, xodimlar oqimi bo‘yicha hisobot tayyorlash.\n"
-            text += "    - Xodimlar soni/to‘g‘riligini bo‘yicha hisobot.\n"
-            text += "    - Xodimlar oqimini tahlil qilish.\n"
-            text += "    - Greyd tizimini joriy etish.\n"
-            text += "🔸Talablar:\n"
-            text += "    - Oliy ta’lim (iqtisodiyot, buxgalteriya, moliya).\n"
-            text += "    - Yo‘nalish bo‘yicha ish tajribasi afzallik, ammo shart emas - hamma narsaga o‘rgatamiz.\n"
-            text += "    - Ofis dasturlaridan (Excel, 1C) unumli foydalanish.\n"
-            text += "🔹Sharoitlar:\n"
-            text += "    - Manzil: Katta O‘zbekiston Trakt, 14, qulay ofis.\n"
-            text += "    - Ish rejasi: 5/2, 09:00 dan 18:00 gacha.\n"
-            text += "    - To‘lanadigan stajirovka - 3 oy, keyin rasmiy ishga qabul qilish.\n"
-            text += "    - Transport va tushlik kompaniya hisobidan.\n"
-            text += "    - Professional ko‘nikmalarni rivojlantirish va qimmatli tajriba orttirish imkoniyati.\n"
-            keyboard = kb.vacancies_detail_kb_uz
-        case "Akkaunt menejeri (Toshkent)":
-            await state.update_data({'vacancy': 'Аккаунт-менеджер (Ташкент)'})
-            await state.set_state(Menu.vacancies_detail)
-            text = "🔸Mas'uliyat:\n"
-            text += "    - mijozlar so'rovlarini qayta ishlash (ijtimoiy tarmoqlardagi chatlar);\n"
-            text += "    - mijozlarga chiquvchi qo'ng'iroqlarni amalga oshirish;\n"
-            text += "    - mijozlar bilan uzoq muddatli munosabatlarni o'rnatish;\n"
-            text += "    - konsultatsiya va mijozlarni tovarni sotib olishi uchun rag'batlantirish.\n"
-            text += "🔸Talablar:\n"
-            text += "    - oliy ma'lumot;\n"
-            text += "    - Ish tajribasi maqullanadi, lekin shart emas;\n"
-            text += "    - Ixtisoslashtirilgan kurslarga ega bo'lish maqsadga muvofiq;\n"
-            text += "    - Ishonchli kompyuter foydalanuvchisi;\n"
-            text += "    - Tez matn yozish qobiliyati (messenjerlar, ijtimoiy tarmoqlar);\n"
-            text += "    - Rus va o‘zbek tillarini bilish.\n"
-            text += "🔹Sharoitlar:\n"
-            text += "    - Rasmiy ish bilan taminlash;\n"
-            text += "    - Bog‘ibuston ko‘chasi, 186-uyda (Impact Technology Hub) qulay kovorking maydoni;\n"
-            text += "    - martaba o'sishi uchun imkoniyatlar.\n"
+            text += "    - Barqaror ish haqi;\n"
+            text += "    - Tushlik va transport kompaniya hisobidan;\n"
+            text += "    - Ish joyida o’qitish;\n"
+            text += "    - Karyera o’sishi uchun imkoniyatlar;\n"
+            text += "    - Ijtimoiy kafolatlar va imtiyozlar;\n"
+            text += "    - Do’stona jamoa va qulay ish sharoitlari.\n"
             keyboard = kb.vacancies_detail_kb_uz
         case "Назад":
             await state.set_state(Menu.main_menu)
@@ -643,6 +545,7 @@ async def vacancies_detail(message: Message, state: FSMContext):
 
 @dp.message(Menu.vacancies_order)
 async def vacancies_order(message: Message, state: FSMContext):
+    global ORDERS_COUNTER
     user = user_get_detail(message.chat.id)
     match message.text:
         case 'Назад':
@@ -666,10 +569,29 @@ async def vacancies_order(message: Message, state: FSMContext):
             await bot.send_message(chat_id=-1002456307374, text=order_text)
             await state.set_state(Menu.main_menu)
             if user['lang'] == 'ru':
-                text = 'Благодарим вас за предоставленную информацию. Сотрудники HR-отдела ознакомятся с вашей кандидатурой и вернутся с обратной связью!'
+                if data["vacancy"] == 'Рабочий на производство (Самарканд)':
+                    pre_message_text = 'Спасибо за рассмотрение нашей вакансии! Мы приглашаем вас на собеседование. '
+                    pre_message_text += 'Пожалуйста, приходите в будние дни по адресу: Самарканд, ул. Катта Узбек '
+                    pre_message_text += 'тракт 14 (бывший базар автозапчастей). При входе необходимо обратиться к охране.'
+                    await message.answer(text=pre_message_text)
+                    await asyncio.sleep(1)
+                    text = f'Спасибо за подачу заявки! Хотим сообщить, что данную заявку уже заполнили {ORDERS_COUNTER} человек. Ждем Вас на собеседовании!'
+                    ORDERS_COUNTER += 1
+                else:
+                    text = 'Благодарим вас за предоставленную информацию. Сотрудники HR-отдела ознакомятся с вашей кандидатурой и вернутся с обратной связью!'
                 keyboard = kb.main_menu_kb_ru
             else:
-                text = "Berilgan ma’lumotlaringiz uchun rahmat. HR-bo'limi xodimlari sizning nomzodingizni ko'rib chiqadi va fikr-mulohazalarini bildiradi!"
+                if data["vacancy"] == 'Рабочий на производство (Самарканд)':
+                    pre_message_text = 'Bizning bo’sh ish joyimizni ko’rib chiqqaningiz uchun tashakkur!Sizni '
+                    pre_message_text += 'intervyuga taklif qilamiz. Iltimos faqat ish kunlarida Samarqand shahri, '
+                    pre_message_text += 'Katta O’zbek trakti 14 ko’chasida (sobiq avto ehtiyot qismlaar bozori) sizni '
+                    pre_message_text += 'qutib qolamiz. Kirish paytida siz xavfsizlik xizmatchilariga murojaat qilishingiz kerak.'
+                    await message.answer(text=pre_message_text)
+                    await asyncio.sleep(1)
+                    text = f'Murojaat qilganingiz uchun tashakkur! Sizga shuni ma’lum qilamizki,ushbu arizani allaqachon {ORDERS_COUNTER} kishi to’ldirgan.Sizni intervyuda qutib qolamiz!'
+                    ORDERS_COUNTER += 1
+                else:
+                    text = "Berilgan ma’lumotlaringiz uchun rahmat. HR-bo'limi xodimlari sizning nomzodingizni ko'rib chiqadi va fikr-mulohazalarini bildiradi!"
                 keyboard = kb.main_menu_kb_uz
     await message.answer(text=text, reply_markup=keyboard)
 
