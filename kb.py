@@ -135,9 +135,7 @@ vacancies_ru = ReplyKeyboardMarkup(
         [KeyboardButton(text='Продавец-консультант (Ташкент)')],
         [KeyboardButton(text='Грузчик (Ташкент)')],
         [KeyboardButton(text='Специалист по отделке края ковров (оверлок) (Ташкент)')],
-        [KeyboardButton(text='SMM-менеджер мобилограф (Самарканд)')],
-        [KeyboardButton(text='Стажер HR-аналитик (Самарканд)')],
-        [KeyboardButton(text='Аккаунт-менеджер (Ташкент)')],
+        [KeyboardButton(text='Рабочий на производство (Самарканд)')],
         [KeyboardButton(text='Назад')],
     ]
 )
@@ -149,9 +147,7 @@ vacancies_uz = ReplyKeyboardMarkup(
         [KeyboardButton(text="Sotuvchi-maslahatchi (Toshkent)")],
         [KeyboardButton(text="Yuk tashuvchi (Toshkent)")],
         [KeyboardButton(text="Gilam chetlarini tikish bo‘yicha mutaxassis (overlok) (Toshkent)")],
-        [KeyboardButton(text="SMM menejeri/mobilograf (Samarqand)")],
-        [KeyboardButton(text="HR-analitik stajyori (Samarkand)")],
-        [KeyboardButton(text="Akkaunt menejeri (Toshkent)")],
+        [KeyboardButton(text="Ishlab chiqarish ishchisi (Samarqand)")],
         [KeyboardButton(text="Orqaga")],
     ]
 )
